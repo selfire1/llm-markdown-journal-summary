@@ -28,15 +28,15 @@ const bar = barInstance.create(mdFiles.length, 0);
 bar.start(mdFiles.length, 0);
 
 for await (const item of mdFiles) {
-  barInstance.log(`${item}: Processing...\n`);
   const file = Bun.file(path + "/" + item);
   const fileText = await file.text();
   const { data: frontmatter, content } = matter(fileText);
 
   if (frontmatter?.title && frontmatter?.summary) {
-    barInstance.log(`Skipping ${item}\n`);
     continue;
   }
+
+  barInstance.log(`${item}: Processing...\n`);
 
   const response = await summariseEntry(content);
   let llmTitle = "";
@@ -62,9 +62,8 @@ for await (const item of mdFiles) {
     bar.increment();
     continue;
   }
-  barInstance.log(`${item}: Writing to file...\n`);
   await Bun.write(file, newContent);
-  barInstance.log(`${item}: Done.`);
+  barInstance.log(`${item}: Finished. ("${llmTitle}")\n`);
   bar.increment();
 }
 
