@@ -3,6 +3,7 @@ import matter from "gray-matter";
 import { readdir } from "node:fs/promises";
 import { summariseEntry } from "./ollama";
 import { args } from "./arguments";
+import dayjs from "dayjs";
 
 declare module "bun" {
   interface Env {
@@ -28,11 +29,20 @@ const bar = barInstance.create(mdFiles.length, 0);
 bar.start(mdFiles.length, 0);
 
 for await (const item of mdFiles) {
+  const isToday = dayjs(item).isSame(dayjs(), "day");
+  barInstance.log(item);
+  if (isToday) {
+    barInstance.log("is today " + item);
+    bar.increment();
+    continue;
+  }
+
   const file = Bun.file(path + "/" + item);
   const fileText = await file.text();
   const { data: frontmatter, content } = matter(fileText);
 
   if (frontmatter?.title && frontmatter?.summary) {
+    bar.increment();
     continue;
   }
 
@@ -47,6 +57,7 @@ for await (const item of mdFiles) {
     llmSummary = summary;
   } catch (e) {
     barInstance.log("Error parsing response. Skipping.\n");
+    bar.increment();
     continue;
   }
   const newFrontmatter = {

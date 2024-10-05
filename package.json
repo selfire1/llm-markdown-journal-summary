@@ -16,6 +16,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "dayjs": "^1.11.13",
     "ollama": "^0.5.8"
   }
 }
