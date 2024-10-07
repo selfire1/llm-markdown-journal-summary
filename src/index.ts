@@ -30,9 +30,8 @@ bar.start(mdFiles.length, 0);
 
 for await (const item of mdFiles) {
   const isToday = dayjs(item).isSame(dayjs(), "day");
-  barInstance.log(item);
   if (isToday) {
-    barInstance.log("is today " + item);
+    barInstance.log("is today " + item + "\n");
     bar.increment();
     continue;
   }
