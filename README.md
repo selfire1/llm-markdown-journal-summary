@@ -67,3 +67,7 @@ See:
 
 - This script does not process subdirectories.
 - As you might know, large language models are prone to hallucination.
+
+## Contributing
+
+- Feel free to create an issue if you would like to implement a feature or improve the script!
