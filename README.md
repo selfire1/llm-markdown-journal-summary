@@ -1,28 +1,50 @@
-# journal-summariser
+# Markdown Journal Summariser
 
 ## Requirements
 
-- [Bun](https://bun.sh)
-- [Ollama](https://ollama.com/)
+Before running this script you need to:
 
-To install dependencies:
+### 1. Install Bun
+
+Bun is the JavaScript runtime used to run this script.
+
+You can check if Bun is installed by running `bun -v` in the terminal.
+
+To install Bun, have a look at the [installation documentation](https://bun.sh/docs/installation).
+
+### 2. Install Ollama
+
+Ollama is used to run a local language model on your maching.
+
+Make sure to download and install [Ollama](https://ollama.com/).
+
+### 3. Install dependencies
 
 ```bash
 bun install
 ```
 
-## Usage
+### 4. Update Obsidian path
 
-To start ollama:
+Copy the example file:
 
 ```bash
-ollama serve
+cp .env.example .env
 ```
 
-To run script:
+Update the `.env` file with the path to your Obsidian journals.
+
+## Usage
+
+Start Ollama by either:
+
+1. Run `ollama serve` in your terminal, or
+2. Open the Ollama app.
+
+Run the script:
 
 > [!CAUTION]
-> The script overwrites files on your system without confirmation. Use with caution, and backup your data.
+> The script modifies files on your system without confirmation. Use with caution, and backup your data.
 
 ```bash
 bun run start
@@ -38,9 +60,10 @@ bun run start --dry
 
 See:
 
-- `.env.example`
-- `/src/config.ts`
+- Path to your Obsidian journals: `.env.example`
+- To tweak prompts: `/src/config.ts`
 
 ## Gotchas
 
-Large language models are prone to hallucination.
+- This script does not process subdirectories.
+- As you might know, large language models are prone to hallucination.
